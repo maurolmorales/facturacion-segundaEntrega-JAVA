@@ -1,28 +1,18 @@
-# Facturación Segunda Entrega
+# Facturación y Carrito de Compras
 
 ---
 
-"Lista del Super" es una aplicación web PWA diseñada para ser utilizada en el celular. Permite a los usuarios generar una lista de artículos faltantes en el hogar, funcionando como una "lista del supermercado".
+Este proyecto es una aplicación de gestión de facturación y carrito de compras desarrollada con Java y Spring Boot. Permite a los usuarios agregar productos a un carrito, generar facturas y administrar la información de clientes, productos y facturas.
+
+
 
 ## Descripción
+El proyecto está compuesto por las siguientes entidades:
 
-La aplicación se divide en dos partes:
-1. **Inventario**: Los usuarios pueden generar una lista de artículos que comúnmente compran.
-2. **Lista del Super**: A partir de la lista de inventario, los usuarios pueden generar una lista de productos a comprar. Los datos se guardan en las cookies del navegador.
-
-**Nota**: La aplicación está en proceso de desarrollo y no está completamente terminada.
-
-## Características
-
-- Generación de una lista de inventario con artículos comúnmente comprados.
-- Creación de una lista de productos a comprar basada en la lista de inventario.
-- Control de artículos comprados mediante un botón de "check" en la lista del supermercado.
-
-## Tecnologías Utilizadas
-
-- **Frontend**: React.js, HTML, CSS, Tailwind
-- **Backend**: Node.js, npm
-- **Librerías**: React Router (react-router-dom)
+1. Client: Representa a un cliente y contiene información como ID, nombre, apellido y número de documento.
+2. Product: Representa un producto y contiene información como ID, nombre, stock y precio.
+3. Invoice: Representa una factura y contiene información como ID, fecha de creación, total y estado.
+4. Cart: Representa un ítem en el carrito de compras y contiene información como ID, cantidad, precio, cliente, producto y factura.
 
 ## Instalación
 
@@ -31,36 +21,100 @@ Para clonar y ejecutar esta aplicación en tu máquina local, sigue estos pasos:
 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/mi-usuario/mi-repo.git
+git clone https://github.com/maurolmorales/facturacion-segundaEntrega-JAVA.git
 ```
 
-2. Navega al directorio del proyecto:
+2. Configurar la Base de Datos:
 
-```bash
-cd mi-repo`
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/facturacion
+spring.datasource.username=[tu_usuario]
+spring.datasource.password=[tu_contraseña]
 ```
 
-3. Instala las dependencias:
+Asegúrate de reemplazar nombre_basedatos, tu_usuario y tu_contraseña con los valores correspondientes de tu configuración de MySQL.
 
-```bash
-cd site
-npm install
+
+3. Ejecutar la Aplicación:
+
+En tu IDE, busca la clase principal (generalmente anotada con @SpringBootApplication) y ejecútala como una aplicación Java.
+
+4. Probar la API con Postman:
+
+Agregar un Producto:
+: - URL: "http://localhost:8080/api/v1/products"
+: - BODY:
+```
+{
+"name": "Campera",
+"stock": 4,
+"price": 135.35
+}
 ```
 
-4. Uso. Para ejecutar la aplicación, utiliza el siguiente comando:
+Obtener Todos los Productos:
+: - Método: GET
+: - URL: http://localhost:8080/api/v1/products
 
-```bash
-npm run dev
+
+Obtener un productos en concreto:
+: - Método: GET
+: - URL: http://localhost:8080/api/v1/{productId}
+
+Modificar un producto en concreto:
+: - Método: PATCH
+: - URL: "http://localhost:8080/api/v1/products/5"
+: - BODY:
+```
+{
+"stock": 150,
+}
+```
+Agregar ingresar un cliente:
+: - Método: POST
+: - URL: "http://localhost:8080/api/v1/auth/register"
+: - BODY:
+```
+{
+"name": "nombre_cliente",
+"lastname": "apellido_cliente,
+"docnumber": 23456789
+}
 ```
 
-Esto iniciará un servidor de desarrollo en un puerto local. Normalmente, puedes acceder a la aplicación en [link](http://localhost:3000).
+Modificar un cliente en concreto:
+: - Método: PATCH
+: - URL: "http://localhost:8080/api/v1/auth/me/5"
+: - BODY:
+```
+{
+"name": "Fernanda",
+}
+```
 
-## Funcionalidades:
-Inventario:
-Accede al ícono "Inventario" para generar la lista de artículos habituales.
-Añade artículos a la lista del supermercado con el botón disponible en cada ítem.
-Lista del Super:
-Accede al ícono "Lista" para ver la lista generada a partir de la selección del usuario en el inventario.
-Marca los artículos como comprados con el botón de "check" en cada ítem.
-Contribuciones
-Actualmente, no se aceptan contribuciones a este proyecto.
+Agregar Ítem al Carrito:
+: - Método: PUT
+: - URL: "http://localhost:8080/api/v1/{clientId}/{productId}/{amount}"
+
+Eliminar un producto de un carrito:
+: - Método: DELETE
+: - URL: "http://localhost:8080/api/v1/carts/{cartId}"
+
+Obtener Todos los Ítems del Carrito:
+: - Método: GET
+: - URL: http://localhost:8080/api/v1/carts
+
+
+Obtener un factura en particular:
+: - Método: GET
+: - URL: http://localhost:8080/api/v1/invoice/{invoiceID}
+
+Generar una factura:
+: - Método: POST
+: - URL: http://localhost:8080/api/v1/invoices
+: - BODY:
+```
+{
+"clientId": 2,
+}
+```

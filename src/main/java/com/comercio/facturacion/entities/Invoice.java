@@ -23,4 +23,5 @@ public class Invoice {
   @JsonIgnore
   @Getter @Setter private Client clientInvoice;
 
+  // Se tuvo que agregar el decorador "@JsonIgnore" para que no se generara en una concatenación exponencial.
 }

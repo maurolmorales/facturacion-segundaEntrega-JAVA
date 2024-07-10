@@ -1,12 +1,10 @@
 package com.comercio.facturacion.controllers;
 import com.comercio.facturacion.entities.Client;
-import com.comercio.facturacion.entities.Product;
 import com.comercio.facturacion.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -73,6 +71,5 @@ public class ClientController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
-
 
 }

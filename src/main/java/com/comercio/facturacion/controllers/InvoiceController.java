@@ -1,15 +1,13 @@
 package com.comercio.facturacion.controllers;
 import com.comercio.facturacion.entities.Client;
 import com.comercio.facturacion.entities.Invoice;
-import com.comercio.facturacion.entities.Product;
 import com.comercio.facturacion.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/invoices")
@@ -26,6 +24,28 @@ public class InvoiceController {
     }
   }
 
+  @GetMapping
+  public ResponseEntity<List<Invoice>> getAllInvoices(){
+    try{
+      List<Invoice> invoice = invoiceService.readAllInvoices();
+      if(!invoice.isEmpty()){ return ResponseEntity.ok(invoice); }
+      else{ return ResponseEntity.noContent().build(); }
+    }catch (Exception error){
+      System.out.println(error.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<Object> getOneInvoice(@PathVariable Long id){
+    try{
+      Optional<Invoice> invoice = invoiceService.findOneInvoice(id);
+      if(!invoice.isEmpty()){ return ResponseEntity.ok(invoice.get()); }
+      else{ return ResponseEntity.notFound().build(); }
+    }catch (Exception error){
+      System.out.println(error.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
 
 }

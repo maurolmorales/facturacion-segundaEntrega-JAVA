@@ -11,12 +11,11 @@ public class Client {
   @Getter @Setter private Long clientId;
   @Getter @Setter private String name;
   @Getter @Setter private String lastname;
-    @Getter @Setter private Integer docnumber;
+  @Getter @Setter private Integer docnumber;
 
   @OneToMany(mappedBy = "clientInvoice", cascade = CascadeType.ALL, orphanRemoval = true)
   @Getter @Setter private List<Invoice> invoices;
 
   @OneToMany(mappedBy = "clientCart", cascade = CascadeType.ALL, orphanRemoval = true)
   @Getter @Setter private List<Cart> carts;
-
 }

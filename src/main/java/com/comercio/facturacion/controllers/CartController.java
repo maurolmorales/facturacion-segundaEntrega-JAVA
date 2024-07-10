@@ -1,6 +1,5 @@
 package com.comercio.facturacion.controllers;
 import com.comercio.facturacion.entities.Cart;
-import com.comercio.facturacion.entities.Product;
 import com.comercio.facturacion.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,21 +14,6 @@ import java.util.Optional;
 public class CartController {
   @Autowired private CartService cartService;
 
-  @GetMapping
-  public ResponseEntity<List<Cart>> getAllCart(){
-    try{
-      List<Cart> cart = cartService.readAllCart();
-      if(!cart.isEmpty()){ return ResponseEntity.ok(cart); }
-      else{ return ResponseEntity.noContent().build(); }
-    }catch (Exception error){
-      System.out.println(error.getMessage());
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
-  }
-
-
-//////////////////////////////////////////////////////////////////////////////////
-
   @PutMapping("/{clientId}/{productId}/{amount}")
   public ResponseEntity<Cart> addToCart (@PathVariable Long clientId, @PathVariable Long productId, @PathVariable Integer amount ){
     try{
@@ -41,7 +25,17 @@ public class CartController {
     }
   }
 
-//////////////////////////////////////////////////////////////////////////////////
+  @GetMapping
+  public ResponseEntity<List<Cart>> getAllCart(){
+    try{
+      List<Cart> cart = cartService.readAllCart();
+      if(!cart.isEmpty()){ return ResponseEntity.ok(cart); }
+      else{ return ResponseEntity.noContent().build(); }
+    }catch (Exception error){
+      System.out.println(error.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
 
   // Método para eliminar un producto del carrito de un cliente
   @DeleteMapping("/{id}")
@@ -57,4 +51,3 @@ public class CartController {
     }
   }
 }
-

@@ -27,5 +27,5 @@ public class Cart {
   @JsonIgnore
   @Getter @Setter private Product productCart;
 
-
+ // Se tuvo que agregar el decorador "@JsonIgnore" para que no se generara en una concatenación exponencial.
 }

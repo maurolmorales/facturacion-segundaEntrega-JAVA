@@ -1,6 +1,5 @@
 package com.comercio.facturacion.services;
 import com.comercio.facturacion.entities.Client;
-import com.comercio.facturacion.entities.Product;
 import com.comercio.facturacion.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ public class ClientService {
   public Optional<Client> findOneClient(Long id){
     return clientRepository.findById(id);
   }
-
 
   public Client updateClientPartial (Long clientID, Map<String, Object> updates) throws Exception {
     Optional<Client> clientFound = clientRepository.findById(clientID);

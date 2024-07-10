@@ -18,4 +18,6 @@ public class Product {
   @OneToMany(mappedBy = "productCart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   @JsonIgnore
   @Getter @Setter private List<Cart> carts;
+
+  // Se tuvo que agregar el decorador "@JsonIgnore" para que no se generara en una concatenación exponencial.
 }
